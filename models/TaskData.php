@@ -1,6 +1,6 @@
 <?php
 
-namespace kouosl\sample\models;
+namespace kouosl\task\models;
 
 use Yii;
 
@@ -13,14 +13,14 @@ use Yii;
  *
  * @property Samples $sample
  */
-class SampleData extends \yii\db\ActiveRecord
+class TaskData extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'sample_data';
+        return 'task_data';
     }
 
     /**
@@ -32,7 +32,7 @@ class SampleData extends \yii\db\ActiveRecord
             [['name', 'sample_id'], 'required'],
             [['sample_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['sample_id'], 'exist', 'skipOnError' => true, 'targetClass' => Samples::className(), 'targetAttribute' => ['sample_id' => 'id']],
+            [['sample_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['sample_id' => 'id']],
         ];
     }
 
@@ -53,6 +53,6 @@ class SampleData extends \yii\db\ActiveRecord
      */
     public function getSample()
     {
-        return $this->hasOne(Samples::className(), ['id' => 'sample_id']);
+        return $this->hasOne(Task::className(), ['id' => 'sample_id']);
     }
 }

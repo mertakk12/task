@@ -1,22 +1,24 @@
 <?php
 
-namespace kouosl\sample\controllers\backend;
+namespace kouosl\task\controllers\backend;
 
-use kouosl\sample\models\SampleData;
-use kouosl\sample\models\UploadImage;
+use kouosl\task\models\TaskData;
+use kouosl\task\models\UploadImage;
 use Yii;
-use kouosl\sample\models\Samples;
-use kouosl\sample\models\SamplesSearch;
+use kouosl\task\models\Task;
+use kouosl\task\models\Member;
+use kouosl\task\models\TaskSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UnauthorizedHttpException;
 use yii\web\Session;
 use yii\web\UploadedFile;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
 /**
  * SamplesController implements the CRUD actions for Sample model.
  */
-class SamplesController extends DefaultController
+class TaskController extends DefaultController
 {
     public function behaviors()
     {
@@ -46,6 +48,19 @@ class SamplesController extends DefaultController
     
     }
 
+    public function actionMember(){
+    	$provider = new ActiveDataProvider([
+			'query' => Member::find(),
+			'pagination' => [
+			'pageSize' => 2,
+			],
+		]);
+		return $this->render('_member', [
+			'dataProvider' => $provider,
+			]);
+    
+    }
+
     public function actionIndex()
     {
         return $this->actionManage();
@@ -60,7 +75,7 @@ class SamplesController extends DefaultController
     	
 
     	
-        $searchModel = new SamplesSearch();
+        $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('_manage', [
@@ -92,7 +107,7 @@ class SamplesController extends DefaultController
     {
 
     	
-        $model = new Samples();
+        $model = new Task();
 
         $uploadImage = new UploadImage();
 
@@ -104,7 +119,7 @@ class SamplesController extends DefaultController
 
             if(!$model->save()){
 
-                yii::$app->session->setFlash('flashMessage', ['type' => 'error', 'message' => Module::t('sample', 'Sample Not Saved' )]);
+                yii::$app->session->setFlash('flashMessage', ['type' => 'error', 'message' => Module::t('task', 'Sample Not Saved' )]);
 
                 return $this->render('_create', ['model' => $model]); // error
             }
@@ -145,7 +160,7 @@ class SamplesController extends DefaultController
 
             if(!$model->save()){
 
-                yii::$app->session->setFlash('flashMessage', ['type' => 'error', 'message' => Module::t('sample', 'Sample Not Saved' )]);
+                yii::$app->session->setFlash('flashMessage', ['type' => 'error', 'message' => Module::t('task', 'Sample Not Saved' )]);
 
                 return $this->render('_update', ['model' => $model]); // error
             }
@@ -193,7 +208,7 @@ class SamplesController extends DefaultController
      */
     protected function findModel($id)
     {
-        if (($model = Samples::findOne($id)) !== null) {
+        if (($model = Task::findOne($id)) !== null) {
 
             return $model;
 

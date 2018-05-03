@@ -1,6 +1,6 @@
 <?php
 
-namespace kouosl\sample\models;
+namespace kouosl\task\models;
 
 use Yii;
 
@@ -14,7 +14,7 @@ use Yii;
  *
  * @property data[] $data
  */
-class Samples extends \yii\db\ActiveRecord
+class Task extends \yii\db\ActiveRecord
 {
 
     /**
@@ -22,7 +22,7 @@ class Samples extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'samples';
+        return 'task';
     }
 
     /**
@@ -51,7 +51,7 @@ class Samples extends \yii\db\ActiveRecord
     }
 
     public function getImagePath(){
-        return sprintf("%s/samples/%s",Yii::getAlias ( '@data' ),$this->picture);
+        return sprintf("%s/task/%s",Yii::getAlias ( '@data' ),$this->picture);
     }
 
     /**
